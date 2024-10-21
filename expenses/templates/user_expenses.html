@@ -1,0 +1,42 @@
+<style>
+    .expenses-container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .expenses-container h2 {
+        color: #4A90E2;
+    }
+
+    .expenses-container ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .expenses-container li {
+        padding: 5px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .expenses-container p {
+        color: #777;
+    }
+</style>
+
+<div class="expenses-container">
+    {% if expenses %}
+        <h2>Expenses for {{ user.username }}</h2>
+        <ul>
+            {% for expense in expenses %}
+                <li>{{ expense.description }}: {{ expense.amount }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No expenses found for {{ user.username }}.</p>
+    {% endif %}
+</div>

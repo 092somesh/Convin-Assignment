@@ -1,0 +1,95 @@
+<!-- templates/base.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <title>{% block title %}Expense Sharing App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #4A90E2; /* Primary color */
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        nav {
+            margin: 20px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFCC00; /* Highlight color on hover */
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        main {
+            padding: 20px;
+            margin-bottom: 60px; /* Space for footer */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Daily Expense Sharing App</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'create_user' %}">Create User</a></li>
+                <li><a href="{% url 'add_expense' %}">Add Expense</a></li>
+                <li><a href="{% url 'user_expenses' user_id=1 %}">View User Expenses</a></li>
+                <li><a href="{% url 'overall_expenses' %}">View Overall Expenses</a></li>
+                <li><a href="{% url 'balance_sheet' %}">Download Balance Sheet</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Page-specific content will be injected here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Expense Sharing App</p>
+        <p>All rights reserved.</p>
+    </footer>
+</body>
+</html>

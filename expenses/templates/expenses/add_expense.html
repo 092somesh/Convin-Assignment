@@ -1,0 +1,24 @@
+<!-- templates/expenses/add_expense.html -->
+{% extends 'base.html' %}
+
+{% block title %}Add Expense{% endblock %}
+
+{% block content %}
+<h2>Add Expense</h2>
+<form method="POST" style="max-width: 400px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+    {% csrf_token %}
+    
+    <label for="description">Description:</label>
+    <input type="text" name="description" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
+    
+    <label for="amount">Amount:</label>
+    <input type="number" name="amount" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
+
+    <label for="date">Date:</label>
+    <input type="date" name="date" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
+
+    <button type="submit" style="background-color: #4A90E2; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; width: 100%;">
+        Add Expense
+    </button>
+</form>
+{% endblock %}

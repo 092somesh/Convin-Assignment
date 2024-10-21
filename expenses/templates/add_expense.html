@@ -1,0 +1,97 @@
+<!-- templates/add_expense.html -->
+{% extends 'base.html' %}
+
+{% block title %}Add Expense{% endblock %}
+
+{% block content %}
+    <h2>Add a New Expense</h2>
+    <form method="POST" action="{% url 'add_expense' %}" class="expense-form">
+        {% csrf_token %}
+        
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required><br>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" required><br>
+
+        <label for="split_method">Split Method:</label>
+        <select id="split_method" name="split_method" onchange="handleSplitMethod()">
+            <option value="equal">Equal</option>
+            <option value="exact">Exact</option>
+            <option value="percentage">Percentage</option>
+        </select><br>
+
+        <!-- Dynamic input fields for exact or percentage split -->
+        <div id="dynamic-fields"></div>
+
+        <label for="user">User:</label>
+        <select id="user" name="user">
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select><br>
+
+        <button type="submit">Add Expense</button>
+    </form>
+
+    <style>
+        .expense-form {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .expense-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        .expense-form input,
+        .expense-form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .expense-form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .expense-form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+    <script>
+        function handleSplitMethod() {
+            const method = document.getElementById('split_method').value;
+            const dynamicFields = document.getElementById('dynamic-fields');
+            dynamicFields.innerHTML = ''; // Clear previous dynamic inputs
+
+            if (method === 'exact' || method === 'percentage') {
+                const users = {{ users|safe }};  // Pass users from backend
+                users.forEach(user => {
+                    let label = document.createElement('label');
+                    label.setAttribute('for', `${method === 'exact' ? 'share' : 'percentage'}_${user.id}`);
+                    label.innerText = method === 'exact' ? `Share for ${user.username}:` : `Percentage for ${user.username}:`;
+
+                    let input = document.createElement('input');
+                    input.setAttribute('type', 'number');
+                    input.setAttribute('id', `${method === 'exact' ? 'share' : 'percentage'}_${user.id}`);
+                    input.setAttribute('name', `${method === 'exact' ? 'share' : 'percentage'}_${user.id}`);
+                    input.required = true;
+
+                    dynamicFields.appendChild(label);
+                    dynamicFields.appendChild(input);
+                    dynamicFields.appendChild(document.createElement('br'));
+                });
+            }
+        }
+    </script>
+{% endblock %}
