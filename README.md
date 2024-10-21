@@ -1,5 +1,3 @@
-Step 1: Create requirements.txt
-Here’s a basic requirements.txt file based on the typical packages used in a Django project. You may want to adjust it based on your specific needs and installed packages.You can create this file manually by following these steps:
 
 Open your project directory in a text editor or IDE.
 Create a new file named requirements.txt.
